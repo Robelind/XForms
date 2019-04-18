@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
+using XForms;
 
 namespace XFormsDemo.Basic
 {
-    class BasicViewModel
+    class BasicViewModel : ICustomValidation
     {
         public ICommand CommitCmd { get; set; }
 
@@ -21,6 +22,9 @@ namespace XFormsDemo.Basic
         public string Value5 { get; set; }
         [Required(ErrorMessage = "Date please")]
         public DateTime? Value6 { get; set; }
-        public IEnumerable<string> Values => new[] {"Value1", "Value1", "Value3"};
+        public IEnumerable<string> Values => new[] { "Value1", "Value1", "Value3" };
+        public void Validate()
+        {
+        }
     }
 }

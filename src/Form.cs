@@ -11,16 +11,13 @@ namespace XForms
     {
         private readonly IDictionary<string, Feedback> _feedback = new Dictionary<string, Feedback>();
 
-        public static readonly BindableProperty CommitCommandProperty = BindableProperty.Create(nameof(CommitCommand),
-            typeof(ICommand),
+        public static readonly BindableProperty CommitCommandProperty = BindableProperty.Create(nameof(CommitCommand), typeof(ICommand),
             typeof(Form));
 
-        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton",
-            typeof(bool),
+        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton", typeof(bool),
             typeof(Form), false);
 
-        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached(
-            "ValidationMessage",
+        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached("ValidationMessage",
             typeof(bool), typeof(Form), false);
 
         public ICommand CommitCommand
@@ -85,6 +82,11 @@ namespace XForms
 
             if(Validator.TryValidateObject(BindingContext, validationContext, validationResults, true))
             {
+                if(BindingContext is ICustomValidation validation)
+                {
+                    validation.Validate();
+                }
+
                 CommitCommand.Execute(null);
             }
             else
@@ -97,7 +99,8 @@ namespace XForms
             }
         }
 
-        private void HandleValidationFailures(ICollection<ValidationResult> validationResults, IEnumerable<string> active)
+        private void HandleValidationFailures(ICollection<ValidationResult> validationResults,
+            IEnumerable<string> active)
         {
             foreach(var validationResult in validationResults)
             {
@@ -178,9 +181,9 @@ namespace XForms
                 else
                 {
                     Binding binding = child.GetBinding(Entry.TextProperty) ??
-                        child.GetBinding(Editor.TextProperty) ??
-                        child.GetBinding(Picker.SelectedItemProperty) ??
-                        child.GetBinding(DatePicker.DateProperty);
+                                      child.GetBinding(Editor.TextProperty) ??
+                                      child.GetBinding(Picker.SelectedItemProperty) ??
+                                      child.GetBinding(DatePicker.DateProperty);
 
                     if(binding?.Path == propName)
                     {
