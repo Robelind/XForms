@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
+             xmlns:xForms="clr-namespace:XForms;assembly=XForms"
+             x:Class="XFormsDemo.Basic.Basic">
+
+    <ContentPage.BindingContext>
+        <basic:BasicViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <xForms:Form CommitCommand="{Binding CommitCmd}">
+            <Entry Text="{Binding Value1}"/>
+            <Label IsVisible="False" xForms:Form.ValidationMessage="True" TextColor="DarkOrchid" />
+            <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value4}" />
+            <Editor Text="{Binding Value5}"/>
+            <DatePicker Date="{Binding Value6}"/>
+            <StackLayout Orientation="Horizontal">
+                <Entry Text="{Binding Value2}" WidthRequest="50"/>
+                <Entry Text="{Binding Value3}"/>
+            </StackLayout>
+            <Button Text="Ok" xForms:Form.CommitButton="True" />
+            <Button Text="Cancel" />
+        </xForms:Form>
+    </ContentPage.Content>
+</ContentPage>
