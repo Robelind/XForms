@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace XForms
+namespace XForms.Attributes
 {
     public class RequiredTrueAttribute : ValidationAttribute
     {

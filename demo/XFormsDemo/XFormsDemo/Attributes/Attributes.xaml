@@ -12,6 +12,10 @@
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
             <Switch IsToggled="{Binding MustCheck}" />
+            <Switch IsToggled="{Binding Value1Flag}" />
+            <Entry Text="{Binding Value1}"/>
+            <Switch IsToggled="{Binding Value2Flag}" />
+            <Entry Text="{Binding Value2}"/>
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>
