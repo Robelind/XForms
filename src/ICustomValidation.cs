@@ -2,6 +2,6 @@
 {
     public interface ICustomValidation
     {
-        void Validate();
+        string Validate();
     }
 }

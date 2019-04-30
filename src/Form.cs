@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Input;
@@ -11,14 +12,21 @@ namespace XForms
     {
         private readonly IDictionary<string, Feedback> _feedback = new Dictionary<string, Feedback>();
 
-        public static readonly BindableProperty CommitCommandProperty = BindableProperty.Create(nameof(CommitCommand), typeof(ICommand),
+        public static readonly BindableProperty CommitCommandProperty = BindableProperty.Create(nameof(CommitCommand),
+            typeof(ICommand),
             typeof(Form));
 
-        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton", typeof(bool),
+        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton",
+            typeof(bool),
             typeof(Form), false);
 
-        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached("ValidationMessage",
+        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached(
+            "ValidationMessage",
             typeof(bool), typeof(Form), false);
+
+        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached(
+            "CustomFeedback", typeof(bool),
+            typeof(Form), false);
 
         public ICommand CommitCommand
         {
@@ -36,6 +44,12 @@ namespace XForms
         {
             get => (bool) this.GetValue(ValidationMessageProperty);
             set => this.SetValue(ValidationMessageProperty, value);
+        }
+
+        public bool CustomFeedback
+        {
+            get => (bool) this.GetValue(CustomFeedbackProperty);
+            set => this.SetValue(CustomFeedbackProperty, value);
         }
 
         protected override void OnChildAdded(Element child)
@@ -81,18 +95,16 @@ namespace XForms
             {
                 throw new ArgumentException("Binding context must be set");
             }
-            
+
             ValidationContext validationContext = new ValidationContext(BindingContext, null, null);
             ICollection<ValidationResult> validationResults = new List<ValidationResult>();
 
             if(Validator.TryValidateObject(BindingContext, validationContext, validationResults, true))
             {
-                if(BindingContext is ICustomValidation validation)
+                if(this.HandleCustomValidation())
                 {
-                    validation.Validate();
+                    CommitCommand.Execute(null);
                 }
-
-                CommitCommand.Execute(null);
             }
             else
             {
@@ -102,6 +114,39 @@ namespace XForms
                 this.HandleInactive(notActive);
                 this.HandleValidationFailures(validationResults, active);
             }
+        }
+
+        private bool HandleCustomValidation()
+        {
+            string customMsg = null;
+
+            if(BindingContext is ICustomValidation validation)
+            {
+                customMsg = validation.Validate();
+            }
+
+            if(customMsg != null)
+            {
+                VisualElement feedbackLabel = this.FindCustomFeedbackCtrl(Children);
+
+                if(feedbackLabel != null)
+                {
+                    if(feedbackLabel is Label label)
+                    {
+                        label.Text = customMsg;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Custom feedback control must be a label");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("No custom feedback label found");
+                }
+            }
+
+            return(customMsg == null);
         }
 
         private void HandleValidationFailures(ICollection<ValidationResult> validationResults,
@@ -211,6 +256,31 @@ namespace XForms
             }
 
             return(result);
+        }
+
+        private VisualElement FindCustomFeedbackCtrl(IList<View> children)
+        {
+            VisualElement customFeedbackCtrl = null;
+
+            for(int index = 0; index < children.Count; index++)
+            {
+                VisualElement child = children.ElementAt(index);
+
+                if(child is IViewContainer<View> viewContainer)
+                {
+                    customFeedbackCtrl = this.FindCustomFeedbackCtrl(viewContainer.Children);
+                }
+                else
+                {
+                    if((bool)child.GetValue(CustomFeedbackProperty))
+                    {
+                        customFeedbackCtrl = child;
+                        break;
+                    }
+                }
+            }
+
+            return(customFeedbackCtrl);
         }
     }
 }

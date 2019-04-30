@@ -23,8 +23,9 @@ namespace XFormsDemo.Custom
         //[Required(ErrorMessage = "Date please")]
         //public DateTime? Value6 { get; set; }
         //public IEnumerable<string> Values => new[] { "Value1", "Value1", "Value3" };
-        public void Validate()
+        public string Validate()
         {
+            return(Value1 == "xxx" ? "This won't fly" : null);
         }
     }
 }

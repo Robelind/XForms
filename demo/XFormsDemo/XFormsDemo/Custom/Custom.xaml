@@ -15,6 +15,7 @@
             <Label IsVisible="False" xForms:Form.ValidationMessage="True" TextColor="DarkOrchid" />
             <Entry Text="{Binding Value2}"/>
             <Label xForms:Form.ValidationMessage="True" TextColor="LightCoral" />
+            <Label xForms:Form.CustomFeedback="True" TextColor="Teal" />
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>
