@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XForms;
 
 namespace XFormsDemo.Basic
 {

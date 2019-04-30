@@ -254,6 +254,7 @@ namespace XForms
                     Binding binding = child.GetBinding(Entry.TextProperty) ??
                                       child.GetBinding(Editor.TextProperty) ??
                                       child.GetBinding(Picker.SelectedItemProperty) ??
+                                      child.GetBinding(Switch.IsToggledProperty) ??
                                       child.GetBinding(DatePicker.DateProperty);
 
                     if(binding?.Path == propName)
