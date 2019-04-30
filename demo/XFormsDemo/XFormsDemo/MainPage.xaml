@@ -2,12 +2,14 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
+            xmlns:custom="clr-namespace:XFormsDemo.Custom;assembly=XFormsDemo"
             x:Class="XFormsDemo.MainPage">
     <TabbedPage.Children>
         <NavigationPage Title="Basic">
-            <x:Arguments>
-                <basic:Basic />
-            </x:Arguments>
+            <x:Arguments><basic:Basic /></x:Arguments>
+        </NavigationPage>
+        <NavigationPage Title="Custom">
+            <x:Arguments><custom:Custom /></x:Arguments>
         </NavigationPage>
     </TabbedPage.Children>
 </TabbedPage>

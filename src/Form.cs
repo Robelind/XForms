@@ -77,6 +77,11 @@ namespace XForms
 
         private void Commit(object sender, EventArgs e)
         {
+            if(BindingContext == null)
+            {
+                throw new ArgumentException("Binding context must be set");
+            }
+            
             ValidationContext validationContext = new ValidationContext(BindingContext, null, null);
             ICollection<ValidationResult> validationResults = new List<ValidationResult>();
 
@@ -107,32 +112,40 @@ namespace XForms
                 if(!active.Contains(validationResult.MemberNames.First()))
                 {
                     FindResult result = this.FindChild(Children, validationResult.MemberNames.First());
-                    Feedback feedback = new Feedback();
 
-                    _feedback.Add(validationResult.MemberNames.First(), feedback);
-                    if(result.Index < result.Children.Count - 1)
+                    if(result != null)
                     {
-                        if((bool) result.Children.ElementAt(result.Index + 1).GetValue(ValidationMessageProperty))
+                        Feedback feedback = new Feedback();
+
+                        _feedback.Add(validationResult.MemberNames.First(), feedback);
+                        if(result.Index < result.Children.Count - 1)
                         {
-                            if(result.Children.ElementAt(result.Index + 1) is Label label)
+                            if((bool) result.Children.ElementAt(result.Index + 1).GetValue(ValidationMessageProperty))
                             {
-                                label.Text = validationResult.ErrorMessage;
-                                feedback.Label = label;
-                                feedback.Visible = label.IsVisible;
-                                label.IsVisible = true;
+                                if(result.Children.ElementAt(result.Index + 1) is Label label)
+                                {
+                                    label.Text = validationResult.ErrorMessage;
+                                    feedback.Label = label;
+                                    feedback.Visible = label.IsVisible;
+                                    label.IsVisible = true;
+                                }
                             }
                         }
-                    }
 
-                    if(feedback.Label == null)
-                    {
-                        feedback.Label = new Label
+                        if(feedback.Label == null)
                         {
-                            Text = validationResult.ErrorMessage,
-                            TextColor = Color.Red,
-                            VerticalOptions = LayoutOptions.Center
-                        };
-                        result.Children.Insert(result.Index + 1, feedback.Label);
+                            feedback.Label = new Label
+                            {
+                                Text = validationResult.ErrorMessage,
+                                TextColor = Color.Red,
+                                VerticalOptions = LayoutOptions.Center
+                            };
+                            result.Children.Insert(result.Index + 1, feedback.Label);
+                        }
+                    }
+                    else
+                    {
+                        // Property with validation isn't used in the form.
                     }
                 }
             }

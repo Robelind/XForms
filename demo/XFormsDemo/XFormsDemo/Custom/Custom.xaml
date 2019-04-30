@@ -1,25 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
              xmlns:xForms="clr-namespace:XForms;assembly=XForms"
-             x:Class="XFormsDemo.Basic.Basic">
+             xmlns:custom="clr-namespace:XFormsDemo.Custom;assembly=XFormsDemo"
+             x:Class="XFormsDemo.Custom.Custom">
 
     <ContentPage.BindingContext>
-        <basic:BasicViewModel/>
+        <custom:CustomViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
             <Entry Text="{Binding Value1}"/>
-            <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value4}" />
-            <Editor Text="{Binding Value5}"/>
-            <StackLayout Orientation="Horizontal">
-                <Entry Text="{Binding Value2}" WidthRequest="50"/>
-                <Entry Text="{Binding Value3}"/>
-            </StackLayout>
+            <Label IsVisible="False" xForms:Form.ValidationMessage="True" TextColor="DarkOrchid" />
+            <Entry Text="{Binding Value2}"/>
+            <Label xForms:Form.ValidationMessage="True" TextColor="LightCoral" />
             <Button Text="Ok" xForms:Form.CommitButton="True" />
-            <Button Text="Cancel" />
         </xForms:Form>
     </ContentPage.Content>
 </ContentPage>
