@@ -12,21 +12,26 @@ namespace XForms
     {
         private readonly IDictionary<string, Feedback> _feedback = new Dictionary<string, Feedback>();
 
+        public static readonly BindableProperty MessageColorProperty = BindableProperty.Create(nameof(MessageColor),
+            typeof(Color), typeof(Form), Color.Red);
+
         public static readonly BindableProperty CommitCommandProperty = BindableProperty.Create(nameof(CommitCommand),
-            typeof(ICommand),
-            typeof(Form));
+            typeof(ICommand), typeof(Form));
 
-        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton",
-            typeof(bool),
+        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton", typeof(bool),
             typeof(Form), false);
 
-        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached(
-            "ValidationMessage",
-            typeof(bool), typeof(Form), false);
-
-        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached(
-            "CustomFeedback", typeof(bool),
+        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached("ValidationMessage", typeof(bool),
             typeof(Form), false);
+
+        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached("CustomFeedback", typeof(bool),
+            typeof(Form), false);
+
+        public Color MessageColor
+        {
+            get => (Color)this.GetValue(MessageColorProperty);
+            set => this.SetValue(MessageColorProperty, value);
+        }
 
         public ICommand CommitCommand
         {
@@ -190,7 +195,7 @@ namespace XForms
                             feedback.Label = new Label
                             {
                                 Text = validationResult.ErrorMessage,
-                                TextColor = Color.Red,
+                                TextColor = MessageColor,
                                 VerticalOptions = LayoutOptions.Center
                             };
                             result.Children.Insert(result.Index + 1, feedback.Label);
