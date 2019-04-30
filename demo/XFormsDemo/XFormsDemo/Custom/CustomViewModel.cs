@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
+using Xamarin.Forms;
 using XForms;
 
 namespace XFormsDemo.Custom
 {
     class CustomViewModel : ICustomValidation
     {
+        public CustomViewModel()
+        {
+            CommitCmd = new Command(() => Application.Current.MainPage.DisplayAlert("XForms", "Form was committed!", "Ok"));
+        }
+
+
         public ICommand CommitCmd { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "ValueRequired")]

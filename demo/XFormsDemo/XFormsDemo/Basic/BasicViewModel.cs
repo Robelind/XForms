@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace XFormsDemo.Basic
 {
     class BasicViewModel
     {
+        public BasicViewModel()
+        {
+            CommitCmd = new Command(() => Application.Current.MainPage.DisplayAlert("XForms", "Form was committed!", "Ok"));
+        }
+
         public ICommand CommitCmd { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "ValueRequired")]

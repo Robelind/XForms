@@ -98,20 +98,28 @@ namespace XForms
 
             ValidationContext validationContext = new ValidationContext(BindingContext, null, null);
             ICollection<ValidationResult> validationResults = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(BindingContext, validationContext, validationResults, true);
+            IEnumerable<string> active = _feedback.Keys.Intersect(validationResults.Select(r => r.MemberNames.First())).ToList();
+            IEnumerable<string> inActive = _feedback.Keys.Except(active).ToList();
 
-            if(Validator.TryValidateObject(BindingContext, validationContext, validationResults, true))
+            this.HandleInactive(inActive);
+
+            if(valid)
             {
                 if(this.HandleCustomValidation())
                 {
-                    CommitCommand.Execute(null);
+                    if(CommitCommand != null)
+                    {
+                        CommitCommand.Execute(null);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("CommitCommand cannot be null");
+                    }
                 }
             }
             else
             {
-                IEnumerable<string> active = _feedback.Keys.Intersect(validationResults.Select(r => r.MemberNames.First())).ToList();
-                IEnumerable<string> notActive = _feedback.Keys.Except(active).ToList();
-
-                this.HandleInactive(notActive);
                 this.HandleValidationFailures(validationResults, active);
             }
         }
