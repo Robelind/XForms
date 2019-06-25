@@ -13,37 +13,61 @@ namespace XForms
     {
         private readonly IDictionary<string, Feedback> _feedback = new Dictionary<string, Feedback>();
 
+        /// <summary>
+        /// Validation message color property. Bindable.
+        /// </summary>
         public static readonly BindableProperty MessageColorProperty = BindableProperty.Create(nameof(MessageColor),
             typeof(Color), typeof(Form), Color.Red);
 
+        /// <summary>
+        /// Commit command property. Bindable.
+        /// </summary>
         public static readonly BindableProperty CommitCommandProperty = BindableProperty.Create(nameof(CommitCommand),
             typeof(ICommand), typeof(Form));
 
-        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached("CommitButton", typeof(bool),
+        /// <summary>
+        /// Commit button property. Bindable.
+        /// </summary>
+        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached(nameof(CommitButton), typeof(bool),
             typeof(Form), false);
 
-        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached("ValidationMessage", typeof(bool),
+        /// <summary>
+        /// Validation message property. Bindable.
+        /// </summary>
+        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached(nameof(ValidationMessage), typeof(bool),
             typeof(Form), false);
 
-        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached("CustomFeedback", typeof(bool),
+        /// <summary>
+        /// Custom feedback property. Bindable.
+        /// </summary>
+        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached(nameof(CustomFeedback), typeof(bool),
             typeof(Form), false);
 
         private Label _customFeedback;
         private bool _customFeedbackVisible;
         private ICustomValidation _customValidation;
 
+        /// <summary>
+        /// Color of the failed validation messages.
+        /// </summary>
         public Color MessageColor
         {
             get => (Color)this.GetValue(MessageColorProperty);
             set => this.SetValue(MessageColorProperty, value);
         }
 
+        /// <summary>
+        /// Command to execute when validation is successful.
+        /// </summary>
         public ICommand CommitCommand
         {
             get => (ICommand) this.GetValue(CommitCommandProperty);
             set => this.SetValue(CommitCommandProperty, value);
         }
 
+        /// <summary>
+        /// Button within the form that triggers the validation.
+        /// </summary>
         public bool CommitButton
         {
             get => (bool) this.GetValue(CommitButtonProperty);
