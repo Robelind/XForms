@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Range" xml:space="preserve">
+    <value>Value must be between 5 and 10</value>
+  </data>
   <data name="Value2Required" xml:space="preserve">
-    <value>Required</value>
+    <value>Mandatory field</value>
   </data>
   <data name="Value3Required" xml:space="preserve">
-    <value>Required</value>
+    <value>Select something!</value>
   </data>
   <data name="ValueRequired" xml:space="preserve">
     <value>You must enter something</value>

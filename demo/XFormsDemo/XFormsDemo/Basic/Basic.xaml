@@ -12,15 +12,15 @@
 
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
-            <Entry Text="{Binding Value1}"/>
-            <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value4}" />
-            <Editor Text="{Binding Value5}"/>
             <StackLayout Orientation="Horizontal">
-                <Entry Text="{Binding Value2}" WidthRequest="50"/>
-                <Entry Text="{Binding Value3}"/>
+                <Label Text="Required value:" VerticalOptions="Center"/>
+                <Entry Text="{Binding Value1}" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
+            <Label Text="Required integer value 5 - 10:"/>
+            <Editor Text="{Binding Value2}"/>
+            <Label Text="Required selection:"/>
+            <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value3}" />
             <Button Text="Ok" xForms:Form.CommitButton="True" />
-            <Button Text="Cancel" />
         </xForms:Form>
     </ContentPage.Content>
 </ContentPage>

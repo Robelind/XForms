@@ -167,9 +167,11 @@ namespace XForms
         {
             foreach(var validationResult in validationResults)
             {
-                if(!active.Contains(validationResult.MemberNames.First()))
+                string propName = validationResult.MemberNames.First();
+
+                if(!active.Contains(propName))
                 {
-                    FindResult result = this.FindChild(this, validationResult.MemberNames.First());
+                    FindResult result = this.FindChild(this, propName);
 
                     if(result != null)
                     {
@@ -225,6 +227,11 @@ namespace XForms
                     {
                         // Property with validation isn't used in the form.
                     }
+                }
+                else
+                {
+                    // Message could have changed.
+                    _feedback[propName].Label.Text = validationResult.ErrorMessage;
                 }
             }
         }
