@@ -14,6 +14,6 @@ namespace XFormsDemo.Attributes
         public ICommand CommitCmd { get; set; }
 
         [RequiredTrue]
-        public bool MustCheck { get; set; }
+        public bool Value { get; set; }
     }
 }

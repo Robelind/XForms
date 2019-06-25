@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Switch = Xamarin.Forms.Switch;
 
 namespace XForms
 {
@@ -74,7 +75,7 @@ namespace XForms
 
             base.OnChildAdded(child);
         }
-
+        /*
         protected override void OnBindingContextChanged()
         {
             //foreach(var child in Children)
@@ -93,7 +94,7 @@ namespace XForms
 
             base.OnBindingContextChanged();
         }
-
+        */
         private void Commit(object sender, EventArgs e)
         {
             if(BindingContext == null)
@@ -162,25 +163,24 @@ namespace XForms
             return(customMsg == null);
         }
 
-        private void HandleValidationFailures(ICollection<ValidationResult> validationResults,
-            IEnumerable<string> active)
+        private void HandleValidationFailures(ICollection<ValidationResult> validationResults, IEnumerable<string> active)
         {
             foreach(var validationResult in validationResults)
             {
                 if(!active.Contains(validationResult.MemberNames.First()))
                 {
-                    FindResult result = this.FindChild(Children, validationResult.MemberNames.First());
+                    FindResult result = this.FindChild(this, validationResult.MemberNames.First());
 
                     if(result != null)
                     {
                         Feedback feedback = new Feedback();
 
                         _feedback.Add(validationResult.MemberNames.First(), feedback);
-                        if(result.Index < result.Children.Count - 1)
+                        if(result.Index < result.Container.Children.Count - 1)
                         {
-                            if((bool) result.Children.ElementAt(result.Index + 1).GetValue(ValidationMessageProperty))
+                            if((bool) result.Container.Children.ElementAt(result.Index + 1).GetValue(ValidationMessageProperty))
                             {
-                                if(result.Children.ElementAt(result.Index + 1) is Label label)
+                                if(result.Container.Children.ElementAt(result.Index + 1) is Label label)
                                 {
                                     label.Text = validationResult.ErrorMessage;
                                     feedback.Label = label;
@@ -198,7 +198,27 @@ namespace XForms
                                 TextColor = MessageColor,
                                 VerticalOptions = LayoutOptions.Center
                             };
-                            result.Children.Insert(result.Index + 1, feedback.Label);
+
+                            if(result.Container is StackLayout stackLayout && stackLayout.Orientation == StackOrientation.Horizontal)
+                            {
+                                IViewContainer<View> parent = stackLayout.Parent as IViewContainer<View>;
+
+                                // Element with failed validation is in a horizontal stack layout.
+                                // Place the message after the stack layout.
+                                Debug.Assert(parent != null);
+                                for(int i = 0; i < parent.Children.Count; i++)
+                                {
+                                    if(parent.Children.ElementAt(i) == result.Container)
+                                    {
+                                        parent.Children.Insert(i + 1, feedback.Label);
+                                    }
+                                }
+                                
+                            }
+                            else
+                            {
+                                result.Container.Children.Insert(result.Index + 1, feedback.Label);
+                            }
                         }
                     }
                     else
@@ -228,26 +248,25 @@ namespace XForms
                 }
                 else
                 {
-                    FindResult result = this.FindChild(Children, propName);
-
-                    result.Children.Remove(feedback.Label);
+                    Debug.Assert(feedback.Label.Parent is IViewContainer<View>);
+                    ((IViewContainer<View>)feedback.Label.Parent).Children.Remove(feedback.Label);
                 }
 
                 _feedback.Remove(propName);
             }
         }
 
-        private FindResult FindChild(IList<View> children, string propName)
+        private FindResult FindChild(IViewContainer<View> container, string propName)
         {
             FindResult result = null;
 
-            for(int index = 0; index < children.Count; index++)
+            for(int index = 0; index < container.Children.Count; index++)
             {
-                VisualElement child = children.ElementAt(index);
+                VisualElement child = container.Children.ElementAt(index);
 
                 if(child is IViewContainer<View> viewContainer)
                 {
-                    result = this.FindChild(viewContainer.Children, propName);
+                    result = this.FindChild(viewContainer, propName);
                 }
                 else
                 {
@@ -259,7 +278,7 @@ namespace XForms
 
                     if(binding?.Path == propName)
                     {
-                        result = new FindResult {Children = children, Index = index};
+                        result = new FindResult {Container = container, /*Children = container,*/ Index = index};
                     }
                 }
 

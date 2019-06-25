@@ -12,8 +12,14 @@
 
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
-            <Switch IsToggled="{Binding Flag}" />
-            <Entry Text="{Binding Value}"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Flag:" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding Flag}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Value:" VerticalOptions="End"/>
+                <Entry Text="{Binding Value}" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>

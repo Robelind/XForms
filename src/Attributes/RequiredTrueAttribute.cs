@@ -23,5 +23,10 @@ namespace XForms.Attributes
                 throw new ArgumentException("Property type must be bool");
             }
         }
+
+        public override string FormatErrorMessage(string name)
+        {
+            return ($"'{name}' must be true");
+        }
     }
 }

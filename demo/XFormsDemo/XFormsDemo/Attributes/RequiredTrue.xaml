@@ -4,7 +4,7 @@
              xmlns:attributes="clr-namespace:XFormsDemo.Attributes;assembly=XFormsDemo"
              xmlns:xForms="clr-namespace:XForms;assembly=XForms"
              x:Class="XFormsDemo.Attributes.RequiredTrue"
-             Title="Attributes">
+             Title="Required true">
 
     <ContentPage.BindingContext>
         <attributes:RequiredTrueViewModel/>
@@ -12,7 +12,10 @@
 
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
-            <Switch IsToggled="{Binding MustCheck}" />
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Value:" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding Value}" />
+            </StackLayout>
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>
