@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xForms="clr-namespace:XForms;assembly=XForms"
              xmlns:custom="clr-namespace:XFormsDemo.Custom;assembly=XFormsDemo"
-             x:Class="XFormsDemo.Custom.Custom">
+             x:Class="XFormsDemo.Custom.Custom"
+             Title="Custom">
 
     <ContentPage.BindingContext>
         <custom:CustomViewModel/>

@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
             xmlns:custom="clr-namespace:XFormsDemo.Custom;assembly=XFormsDemo"
             xmlns:attributes="clr-namespace:XFormsDemo.Attributes;assembly=XFormsDemo"
             x:Class="XFormsDemo.MainPage">
-    <TabbedPage.Children>
-        <NavigationPage Title="Basic">
-            <x:Arguments><basic:Basic /></x:Arguments>
-        </NavigationPage>
-        <NavigationPage Title="Custom">
-            <x:Arguments><custom:Custom /></x:Arguments>
-        </NavigationPage>
-        <NavigationPage Title="Attributes">
-            <x:Arguments><attributes:Attributes /></x:Arguments>
-        </NavigationPage>
-    </TabbedPage.Children>
-</TabbedPage>
+    <TabBar>
+        <Tab Title="Basic">
+            <ShellContent ContentTemplate="{DataTemplate basic:Basic}"/>
+        </Tab>
+        <Tab Title="Custom">
+            <ShellContent ContentTemplate="{DataTemplate custom:Custom}"/>
+        </Tab>
+        <Tab Title="Attributes">
+            <ShellContent Title="Required if true" ContentTemplate="{DataTemplate attributes:RequiredIfTrue}"/>
+            <ShellContent Title="Required if false" ContentTemplate="{DataTemplate attributes:RequiredIfFalse}"/>
+            <ShellContent Title="Required true" ContentTemplate="{DataTemplate attributes:RequiredTrue}"/>
+        </Tab>
+    </TabBar>
+</Shell>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:attributes="clr-namespace:XFormsDemo.Attributes;assembly=XFormsDemo"
+             xmlns:xForms="clr-namespace:XForms;assembly=XForms"
+             x:Class="XFormsDemo.Attributes.RequiredTrue"
+             Title="Attributes">
+
+    <ContentPage.BindingContext>
+        <attributes:RequiredTrueViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <xForms:Form CommitCommand="{Binding CommitCmd}">
+            <Switch IsToggled="{Binding MustCheck}" />
+            <Button Text="Ok" xForms:Form.CommitButton="True" />
+        </xForms:Form>
+    </ContentPage.Content>
+</ContentPage>

@@ -3,19 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:attributes="clr-namespace:XFormsDemo.Attributes;assembly=XFormsDemo"
              xmlns:xForms="clr-namespace:XForms;assembly=XForms"
-             x:Class="XFormsDemo.Attributes.Attributes">
+             x:Class="XFormsDemo.Attributes.RequiredIfFalse"
+             Title="Required if true">
 
     <ContentPage.BindingContext>
-        <attributes:AttributesViewModel/>
+        <attributes:RequiredIfFalseViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
-            <Switch IsToggled="{Binding MustCheck}" />
-            <Switch IsToggled="{Binding Value1Flag}" />
-            <Entry Text="{Binding Value1}"/>
-            <Switch IsToggled="{Binding Value2Flag}" />
-            <Entry Text="{Binding Value2}"/>
+            <Switch IsToggled="{Binding Flag}" />
+            <Entry Text="{Binding Value}"/>
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>
