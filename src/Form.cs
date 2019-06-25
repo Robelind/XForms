@@ -85,16 +85,6 @@ namespace XForms
             set => this.SetValue(CustomFeedbackProperty, value);
         }
 
-        /*protected override void OnChildAdded(Element child)
-        {
-            if(child is Button button && (bool)button.GetValue(CommitButtonProperty))
-            {
-                button.Clicked += Commit;
-            }
-
-            base.OnChildAdded(child);
-        }*/
-        
         protected override void OnBindingContextChanged()
         {
             if(CommitButton == null)
@@ -297,7 +287,7 @@ namespace XForms
 
                     if(binding?.Path == propName)
                     {
-                        result = new FindResult {Container = container, /*Children = container,*/ Index = index};
+                        result = new FindResult {Container = container, Index = index};
                     }
                 }
 
