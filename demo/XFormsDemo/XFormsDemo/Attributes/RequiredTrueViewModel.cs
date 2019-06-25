@@ -13,7 +13,7 @@ namespace XFormsDemo.Attributes
 
         public ICommand CommitCmd { get; set; }
 
-        [RequiredTrue]
+        [RequiredTrue(ErrorMessage = "Switch must be flipped!")]
         public bool Value { get; set; }
     }
 }

@@ -40,10 +40,5 @@ namespace XForms.Attributes
                 ? ValidationResult.Success
                 : new ValidationResult(this.FormatErrorMessage(validationContext.DisplayName), new[] { validationContext.DisplayName }));
         }
-
-        public override string FormatErrorMessage(string name)
-        {
-            return($"'{name}' is required because '{_otherProperty}' is false");
-        }
     }
 }

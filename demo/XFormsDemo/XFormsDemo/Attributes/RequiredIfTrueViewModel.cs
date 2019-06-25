@@ -15,7 +15,7 @@ namespace XFormsDemo.Attributes
         public ICommand CommitCmd { get; set; }
 
         public bool Flag { get; set; }
-        [RequiredIfTrue("Flag")]
+        [RequiredIfTrue("Flag", ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "ValueRequired")]
         public string Value { get; set; }
     }
 }

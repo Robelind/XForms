@@ -97,20 +97,6 @@ namespace XForms
                 }
             }
 
-            //foreach(var child in Children)
-            //{
-            //    if(child is Entry)
-            //    {
-            //        Binding binding = child.GetBinding(Entry.TextProperty);
-            //        PropertyInfo prop = (child.BindingContext ?? BindingContext).GetType().GetProperties()
-            //            .SingleOrDefault(p => p.Name == binding.Path);
-            //    }
-            //    else if(child is Button button)
-            //    {
-            //        button.Clicked += Commit;
-            //    }
-            //}
-
             base.OnBindingContextChanged();
         }
         
@@ -151,17 +137,21 @@ namespace XForms
 
         private bool HandleCustomValidation()
         {
-            string customMsg = _customValidation.Validate();
+            string customMsg = null;
 
-            if(customMsg != null)
+            if(_customValidation != null)
             {
-                _customFeedback.IsVisible = true;
-                _customFeedback.Text = customMsg;
-            }
-            else
-            {
-                _customFeedback.IsVisible = _customFeedbackVisible;
-                _customFeedback.Text = null;
+                customMsg = _customValidation.Validate();
+                if(customMsg != null)
+                {
+                    _customFeedback.IsVisible = true;
+                    _customFeedback.Text = customMsg;
+                }
+                else
+                {
+                    _customFeedback.IsVisible = _customFeedbackVisible;
+                    _customFeedback.Text = null;
+                }
             }
 
             return(customMsg == null);
