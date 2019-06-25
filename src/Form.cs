@@ -28,6 +28,10 @@ namespace XForms
         public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached("CustomFeedback", typeof(bool),
             typeof(Form), false);
 
+        private Label _customFeedback;
+        private bool _customFeedbackVisible;
+        private ICustomValidation _customValidation;
+
         public Color MessageColor
         {
             get => (Color)this.GetValue(MessageColorProperty);
@@ -60,24 +64,39 @@ namespace XForms
 
         protected override void OnChildAdded(Element child)
         {
-            if(child is Button button)
+            if(child is Button button && (bool)button.GetValue(CommitButtonProperty))
             {
-                if((bool) button.GetValue(CommitButtonProperty))
-                {
-                    button.Clicked += Commit;
-                }
+                button.Clicked += Commit;
             }
-            //if(child is Entry)
-            //{
-            //    Binding binding = child.GetBinding(Entry.TextProperty);
-            //    PropertyInfo prop = child.BindingContext.GetType().GetProperties().SingleOrDefault(p => p.Name == binding.Path);
-            //}
 
             base.OnChildAdded(child);
         }
-        /*
+        
         protected override void OnBindingContextChanged()
         {
+            if(BindingContext is ICustomValidation validation)
+            {
+                VisualElement feedbackLabel = this.FindCustomFeedbackCtrl(Children);
+
+                if(feedbackLabel != null)
+                {
+                    if(feedbackLabel is Label label)
+                    {
+                        _customValidation = validation;
+                        _customFeedback = label;
+                        _customFeedbackVisible = label.IsVisible;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Custom feedback control must be a label");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("No custom feedback label found");
+                }
+            }
+
             //foreach(var child in Children)
             //{
             //    if(child is Entry)
@@ -94,7 +113,7 @@ namespace XForms
 
             base.OnBindingContextChanged();
         }
-        */
+        
         private void Commit(object sender, EventArgs e)
         {
             if(BindingContext == null)
@@ -132,32 +151,17 @@ namespace XForms
 
         private bool HandleCustomValidation()
         {
-            string customMsg = null;
-
-            if(BindingContext is ICustomValidation validation)
-            {
-                customMsg = validation.Validate();
-            }
+            string customMsg = _customValidation.Validate();
 
             if(customMsg != null)
             {
-                VisualElement feedbackLabel = this.FindCustomFeedbackCtrl(Children);
-
-                if(feedbackLabel != null)
-                {
-                    if(feedbackLabel is Label label)
-                    {
-                        label.Text = customMsg;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Custom feedback control must be a label");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("No custom feedback label found");
-                }
+                _customFeedback.IsVisible = true;
+                _customFeedback.Text = customMsg;
+            }
+            else
+            {
+                _customFeedback.IsVisible = _customFeedbackVisible;
+                _customFeedback.Text = null;
             }
 
             return(customMsg == null);

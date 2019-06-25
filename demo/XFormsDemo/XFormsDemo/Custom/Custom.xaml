@@ -18,7 +18,7 @@
             <Label Text="Custom validation message, always visible:"/>
             <Entry Text="{Binding Value2}"/>
             <Label xForms:Form.ValidationMessage="True" TextColor="LightCoral" />
-            <Label xForms:Form.CustomFeedback="True" TextColor="Teal" />
+            <Label xForms:Form.CustomFeedback="True" TextColor="Teal" IsVisible="false" />
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>
