@@ -20,6 +20,7 @@
             <Editor Text="{Binding Value2}"/>
             <Label Text="Required selection:"/>
             <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value3}" />
+            <!--<DatePicker Date="{Binding Value6}"/>-->
             <Button Text="Ok" xForms:Form.CommitButton="True" />
         </xForms:Form>
     </ContentPage.Content>

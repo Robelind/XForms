@@ -12,8 +12,10 @@
 
     <ContentPage.Content>
         <xForms:Form CommitCommand="{Binding CommitCmd}">
+            <Label Text="Custom validation message (enter 'xxx' to trigger custom validation):"/>
             <Entry Text="{Binding Value1}"/>
             <Label IsVisible="False" xForms:Form.ValidationMessage="True" TextColor="DarkOrchid" />
+            <Label Text="Custom validation message, always visible:"/>
             <Entry Text="{Binding Value2}"/>
             <Label xForms:Form.ValidationMessage="True" TextColor="LightCoral" />
             <Label xForms:Form.CustomFeedback="True" TextColor="Teal" />
