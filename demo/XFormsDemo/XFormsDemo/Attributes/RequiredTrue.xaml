@@ -16,7 +16,7 @@
                 <Label Text="Value:" VerticalOptions="Center"/>
                 <Switch IsToggled="{Binding Value}" />
             </StackLayout>
-            <Button Text="Ok" xForms:Form.CommitButton="True" />
+            <Button Text="Ok"/>
         </xForms:Form>
     </ContentPage.Content>
 </ContentPage>

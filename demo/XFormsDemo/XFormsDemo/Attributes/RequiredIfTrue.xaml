@@ -20,7 +20,7 @@
                 <Label Text="Value:" VerticalOptions="End"/>
                 <Entry Text="{Binding Value}" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
-            <Button Text="Ok" xForms:Form.CommitButton="True" />
+            <Button Text="Ok" />
         </xForms:Form>
     </ContentPage.Content>
 </ContentPage>

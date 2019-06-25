@@ -18,7 +18,7 @@
             </StackLayout>
             <Label Text="Value:"/>
             <Entry Text="{Binding Value}"/>
-            <Button Text="Ok" xForms:Form.CommitButton="True" />
+            <Button Text="Ok" />
         </xForms:Form>
     </ContentPage.Content>
 </ContentPage>

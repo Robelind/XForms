@@ -28,8 +28,8 @@ namespace XForms
         /// <summary>
         /// Commit button property. Bindable.
         /// </summary>
-        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached(nameof(CommitButton), typeof(bool),
-            typeof(Form), false);
+        public static readonly BindableProperty CommitButtonProperty = BindableProperty.CreateAttached(nameof(CommitButton), typeof(Button),
+            typeof(Form), null);
 
         /// <summary>
         /// Validation message property. Bindable.
@@ -40,10 +40,9 @@ namespace XForms
         /// <summary>
         /// Custom feedback property. Bindable.
         /// </summary>
-        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached(nameof(CustomFeedback), typeof(bool),
-            typeof(Form), false);
+        public static readonly BindableProperty CustomFeedbackProperty = BindableProperty.CreateAttached(nameof(CustomFeedback), typeof(Label),
+            typeof(Form), null);
 
-        private Label _customFeedback;
         private bool _customFeedbackVisible;
         private ICustomValidation _customValidation;
 
@@ -68,9 +67,9 @@ namespace XForms
         /// <summary>
         /// Button within the form that triggers the validation.
         /// </summary>
-        public bool CommitButton
+        public Button CommitButton
         {
-            get => (bool) this.GetValue(CommitButtonProperty);
+            get => (Button) this.GetValue(CommitButtonProperty);
             set => this.SetValue(CommitButtonProperty, value);
         }
 
@@ -80,13 +79,13 @@ namespace XForms
             set => this.SetValue(ValidationMessageProperty, value);
         }
 
-        public bool CustomFeedback
+        public Label CustomFeedback
         {
-            get => (bool) this.GetValue(CustomFeedbackProperty);
+            get => (Label) this.GetValue(CustomFeedbackProperty);
             set => this.SetValue(CustomFeedbackProperty, value);
         }
 
-        protected override void OnChildAdded(Element child)
+        /*protected override void OnChildAdded(Element child)
         {
             if(child is Button button && (bool)button.GetValue(CommitButtonProperty))
             {
@@ -94,31 +93,26 @@ namespace XForms
             }
 
             base.OnChildAdded(child);
-        }
+        }*/
         
         protected override void OnBindingContextChanged()
         {
+            if(CommitButton == null)
+            {
+                throw new ArgumentException("No commit button declared");
+            }
+
+            CommitButton.Clicked += Commit;
+
             if(BindingContext is ICustomValidation validation)
             {
-                VisualElement feedbackLabel = this.FindCustomFeedbackCtrl(Children);
+                if(CustomFeedback == null)
+                {
+                    throw new ArgumentException("No custom feedback element declared");
+                }
 
-                if(feedbackLabel != null)
-                {
-                    if(feedbackLabel is Label label)
-                    {
-                        _customValidation = validation;
-                        _customFeedback = label;
-                        _customFeedbackVisible = label.IsVisible;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Custom feedback control must be a label");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("No custom feedback label found");
-                }
+                _customValidation = validation;
+                _customFeedbackVisible = CustomFeedback.IsVisible;
             }
 
             base.OnBindingContextChanged();
@@ -168,13 +162,13 @@ namespace XForms
                 customMsg = _customValidation.Validate();
                 if(customMsg != null)
                 {
-                    _customFeedback.IsVisible = true;
-                    _customFeedback.Text = customMsg;
+                    CustomFeedback.IsVisible = true;
+                    CustomFeedback.Text = customMsg;
                 }
                 else
                 {
-                    _customFeedback.IsVisible = _customFeedbackVisible;
-                    _customFeedback.Text = null;
+                    CustomFeedback.IsVisible = _customFeedbackVisible;
+                    CustomFeedback.Text = null;
                 }
             }
 
@@ -314,31 +308,6 @@ namespace XForms
             }
 
             return(result);
-        }
-
-        private VisualElement FindCustomFeedbackCtrl(IList<View> children)
-        {
-            VisualElement customFeedbackCtrl = null;
-
-            for(int index = 0; index < children.Count; index++)
-            {
-                VisualElement child = children.ElementAt(index);
-
-                if(child is IViewContainer<View> viewContainer)
-                {
-                    customFeedbackCtrl = this.FindCustomFeedbackCtrl(viewContainer.Children);
-                }
-                else
-                {
-                    if((bool)child.GetValue(CustomFeedbackProperty))
-                    {
-                        customFeedbackCtrl = child;
-                        break;
-                    }
-                }
-            }
-
-            return(customFeedbackCtrl);
         }
     }
 }
