@@ -11,12 +11,12 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <xForms:Form CommitCommand="{Binding CommitCmd}">
+        <xForms:Form CommitButton="{Binding Source={x:Reference SubmitBtn}}" CommitCommand="{Binding CommitCmd}">
             <StackLayout Orientation="Horizontal">
                 <Label Text="Value:" VerticalOptions="Center"/>
                 <Switch IsToggled="{Binding Value}" />
             </StackLayout>
-            <Button Text="Ok"/>
+            <Button x:Name="SubmitBtn" Text="Ok" />
         </xForms:Form>
     </ContentPage.Content>
 </ContentPage>

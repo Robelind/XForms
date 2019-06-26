@@ -13,7 +13,7 @@
     <ContentPage.Content>
         <xForms:Form CommitButton="{Binding Source={x:Reference SubmitBtn}}" CommitCommand="{Binding CommitCmd}"
                      CustomFeedback="{Binding Source={x:Reference CustomFeedback}}">
-            <Label Text="Custom validation message (enter 'xxx' to trigger custom validation):"/>
+            <Label Text="Custom validation message (enter 'xxx' to trigger failed custom validation):"/>
             <Entry Text="{Binding Value1}"/>
             <Label IsVisible="False" xForms:Form.ValidationMessage="True" TextColor="DarkOrchid" />
             <Label Text="Custom validation message, always visible:"/>

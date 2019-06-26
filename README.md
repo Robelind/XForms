@@ -40,6 +40,12 @@ If validation succeeds, the commit command will be executed.
 ### Form layout
 The `xForms:Form` is a vertically oriented stack layout, to enable layout of input elements within it.
 
+### Validation feedback
+The color of the validation feedback text can be configured by using the `MessageColor` property, e.g.:
+```
+<xForms:Form CommitButton="{Binding Source={x:Reference SubmitBtn}}" CommitCommand="{Binding CommitCmd}" MessageColor="Coral">
+```
+
 ## Custom validation
 XForms offers some customization of the validation and feedback.
 ### Validation
@@ -71,7 +77,7 @@ Customization of the appearance of element input validation messages can be done
 	<Button x:Name="SubmitBtn" Text="Ok" />
 </xForms:Form>
 ```
-The attached property `ValidationMessage` is declared for the label to receive the validation message.
+The attached property `ValidationMessage` is declared for the label to receive the validation message for the preceding input element.
 Custom feedback elements can be declared with `IsVisible="True"`, to have them be always visible, i.e. occupy
 space in the layout.
 ## Attributes
