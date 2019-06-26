@@ -1,26 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:attributes="clr-namespace:XFormsDemo.Attributes;assembly=XFormsDemo"
              xmlns:xForms="clr-namespace:XForms;assembly=XForms"
-             xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
-             x:Class="XFormsDemo.Basic.Basic"
-             Title="Basic">
+             x:Class="XFormsDemo.Attributes.RequiredTrue"
+             Title="Required true">
 
     <ContentPage.BindingContext>
-        <basic:BasicViewModel/>
+        <attributes:RequiredTrueViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <xForms:Form CommitButton="{Binding Source={x:Reference SubmitBtn}}" CommitCommand="{Binding CommitCmd}">
             <StackLayout Orientation="Horizontal">
-                <Label Text="Required value:" VerticalOptions="Center"/>
-                <Entry Text="{Binding Value1}" HorizontalOptions="FillAndExpand"/>
+                <Label Text="Value:" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding Value}" />
             </StackLayout>
-            <Label Text="Required integer value 5 - 10:"/>
-            <Editor Text="{Binding Value2}"/>
-            <Label Text="Required selection:"/>
-            <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value3}" />
-            <!--<DatePicker Date="{Binding Value6}"/>-->
             <Button x:Name="SubmitBtn" Text="Ok" />
         </xForms:Form>
     </ContentPage.Content>

@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace XForms
 {
-    public static class BindingObjectExtensions
+    static class BindingObjectExtensions
     {
         public static Binding GetBinding(this BindableObject self, BindableProperty property)
         {

@@ -5,7 +5,8 @@ namespace XForms
 {
     class FindResult
     {
-        public IList<View> Children { get; set; }
+        //public IList<View> Children { get; set; }
         public int Index { get; set; }
+        public IViewContainer<View> Container { get; set; }
     }
 }
