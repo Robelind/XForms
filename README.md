@@ -6,7 +6,7 @@ and bind them to the view model properties.
 
 For examples of everything below, build and run **XFormsDemo** in the repository.
 
-XForms is available through !Nuget(https://www.nuget.org/packages/XForms/)
+XForms is available through [Nuget](https://www.nuget.org/packages/XForms/)
 
 ## Supported elements
 XForms supports validation of the following elements:
