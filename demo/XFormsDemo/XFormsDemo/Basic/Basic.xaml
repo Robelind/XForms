@@ -4,7 +4,7 @@
              xmlns:xForms="clr-namespace:XForms;assembly=XForms"
              xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
              x:Class="XFormsDemo.Basic.Basic"
-             Title="Basic">
+             Title="Basic - button">
 
     <ContentPage.BindingContext>
         <basic:BasicViewModel/>
@@ -20,7 +20,6 @@
             <Editor Text="{Binding Value2}"/>
             <Label Text="Required selection:"/>
             <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value3}" />
-            <!--<DatePicker Date="{Binding Value6}"/>-->
             <Button x:Name="SubmitBtn" Text="Ok" />
         </xForms:Form>
     </ContentPage.Content>

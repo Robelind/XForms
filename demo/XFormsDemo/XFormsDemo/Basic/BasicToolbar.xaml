@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xForms="clr-namespace:XForms;assembly=XForms"
+             xmlns:basic="clr-namespace:XFormsDemo.Basic;assembly=XFormsDemo"
+             x:Class="XFormsDemo.Basic.BasicToolbar"
+             Title="Basic - toolbar">
+
+    <ContentPage.BindingContext>
+        <basic:BasicViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="Save" Text="Ok" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <xForms:Form CommitMenuItem="{Binding Source={x:Reference Save}}" CommitCommand="{Binding CommitCmd}">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Required value:" VerticalOptions="Center"/>
+                    <Entry Text="{Binding Value1}" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+                <Label Text="Required integer value 5 - 10:"/>
+                <Editor Text="{Binding Value2}"/>
+                <Label Text="Required selection:"/>
+                <Picker ItemsSource="{Binding Values}" SelectedItem="{Binding Value3}" />
+            </xForms:Form>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
