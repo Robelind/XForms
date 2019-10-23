@@ -27,6 +27,9 @@
     <Compile Update="Attributes\RequiredIfTrue.xaml.cs">
       <DependentUpon>RequiredIfTrue.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Basic\BasicToolbar.xaml.cs">
+      <DependentUpon>BasicToolbar.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

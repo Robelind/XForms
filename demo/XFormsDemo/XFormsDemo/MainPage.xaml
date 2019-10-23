@@ -6,8 +6,11 @@
             xmlns:attributes="clr-namespace:XFormsDemo.Attributes;assembly=XFormsDemo"
             x:Class="XFormsDemo.MainPage">
     <TabBar>
-        <Tab Title="Basic">
+        <Tab Title="Basic - button">
             <ShellContent ContentTemplate="{DataTemplate basic:Basic}"/>
+        </Tab>
+        <Tab Title="Basic - toolbar">
+            <ShellContent ContentTemplate="{DataTemplate basic:BasicToolbar}"/>
         </Tab>
         <Tab Title="Custom">
             <ShellContent ContentTemplate="{DataTemplate custom:Custom}"/>

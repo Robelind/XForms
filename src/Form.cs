@@ -32,6 +32,12 @@ namespace XForms
             typeof(Form), null);
 
         /// <summary>
+        /// Commit button property. Bindable.
+        /// </summary>
+        public static readonly BindableProperty CommitMenuItemProperty = BindableProperty.CreateAttached(nameof(CommitMenuItem), typeof(MenuItem),
+            typeof(Form), null);
+
+        /// <summary>
         /// Validation message property. Bindable.
         /// </summary>
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.CreateAttached(nameof(ValidationMessage), typeof(bool),
@@ -73,6 +79,15 @@ namespace XForms
             set => this.SetValue(CommitButtonProperty, value);
         }
 
+        /// <summary>
+        /// Menu item that triggers the validation.
+        /// </summary>
+        public MenuItem CommitMenuItem
+        {
+            get => (MenuItem)this.GetValue(CommitMenuItemProperty);
+            set => this.SetValue(CommitMenuItemProperty, value);
+        }
+
         public bool ValidationMessage
         {
             get => (bool) this.GetValue(ValidationMessageProperty);
@@ -87,12 +102,20 @@ namespace XForms
 
         protected override void OnBindingContextChanged()
         {
-            if(CommitButton == null)
+            if(CommitButton == null && CommitMenuItem == null)
             {
-                throw new ArgumentException("No commit button declared");
+                throw new ArgumentException("No commit element declared");
             }
 
-            CommitButton.Clicked += Commit;
+            if(CommitButton != null)
+            {
+                CommitButton.Clicked += Commit;
+            }
+
+            if(CommitMenuItem != null)
+            {
+                CommitMenuItem.Clicked += Commit;
+            }
 
             if(BindingContext is ICustomValidation validation)
             {
