@@ -19,23 +19,22 @@ Lets use the following example to break down the basic validation:
 ```
 <ContentPage.Content>
 	<xForms:Form CommitButton="{Binding Source={x:Reference SubmitBtn}}" CommitCommand="{Binding CommitCmd}">
-        <Label Text="Required value:"/>
-        <Entry Text="{Binding Value1}"/>
+        	<Label Text="Required value:"/>
+        	<Entry Text="{Binding Value1}"/>
 		<Button x:Name="SubmitBtn" Text="Ok" />
 	</xForms:Form>
 </ContentPage.Content>
 ```
 
-The basic construct is the `xForms:Form`, within which all input elements must be placed.
-The `CommitCommand` is the view model command to be executed when validation is successful.
-The `CommitButton` is the button that triggers the validation.
+The basic construct is the `xForms:Form`, within which all input elements must be placed.  
+The `CommitCommand` is the view model command to be executed when validation is successful.  
+The `CommitButton` is the button that triggers the validation.  
 Another possiblity for commiting the form is through a toolbar item/menu item:
 ```
 <ContentPage.Content>
 	<xForms:Form CommitMenuItem="{Binding Source={x:Reference Save}}" CommitCommand="{Binding CommitCmd}">
-        <Label Text="Required value:"/>
-        <Entry Text="{Binding Value1}"/>
-		<Button x:Name="SubmitBtn" Text="Ok" />
+        	<Label Text="Required value:"/>
+        	<Entry Text="{Binding Value1}"/>
 	</xForms:Form>
 </ContentPage.Content>
 ```
